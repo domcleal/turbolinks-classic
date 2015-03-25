@@ -31,7 +31,11 @@ module Turbolinks
 
       ActiveSupport.on_load(:action_view) do
         (ActionView::RoutingUrlFor rescue ActionView::Helpers::UrlHelper).module_eval do
-          include XHRUrlFor
+          if defined?(prepend) && Rails.version >= '4'
+            prepend XHRUrlFor
+          else
+            include LegacyXHRUrlFor
+          end
         end
       end unless RUBY_VERSION =~ /^1\.8/
     end
