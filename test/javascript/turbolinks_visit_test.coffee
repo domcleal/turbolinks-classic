@@ -23,7 +23,7 @@ suite 'Turbolinks.visit()', ->
     permanent = @$('#permanent')
     pageReceivedFired = beforeUnloadFired = false
     @document.addEventListener 'page:receive', =>
-      state = turbolinks: true, url: 'http://localhost:9292/javascript/iframe.html'
+      state = turbolinks: true, url: "#{location.origin}/javascript/iframe.html"
       assert.deepEqual @history.state, state
       pageReceivedFired = true
     @document.addEventListener 'page:before-unload', =>
@@ -51,7 +51,7 @@ suite 'Turbolinks.visit()', ->
       assert.notEqual @$('#permanent'), permanent # permanent nodes are cloned
       assert.notEqual @$('body'), body # body is replaced
 
-      state = turbolinks: true, url: 'http://localhost:9292/javascript/iframe2.html'
+      state = turbolinks: true, url: "#{location.origin}/javascript/iframe2.html"
       assert.deepEqual @history.state, state
       assert.equal @location.href, state.url
       done()
@@ -82,7 +82,7 @@ suite 'Turbolinks.visit()', ->
       assert.equal @document.title, 'title 2'
       assert.notEqual @$('#change'), change # changed nodes are cloned
       assert.equal @$('body'), body
-      assert.equal @location.href, 'http://localhost:9292/javascript/iframe2.html'
+      assert.equal @location.href, "#{location.origin}/javascript/iframe2.html"
       done()
     @Turbolinks.visit('iframe2.html', change: ['change'])
 
@@ -91,7 +91,7 @@ suite 'Turbolinks.visit()', ->
     @window.addEventListener 'unload', =>
       unloadFired = true
       setTimeout =>
-        assert.equal @iframe.contentWindow.location.href, 'http://localhost:9292/javascript/404'
+        assert.equal @iframe.contentWindow.location.href, "#{location.origin}/javascript/404"
         done()
       , 0
     @Turbolinks.visit('404')
