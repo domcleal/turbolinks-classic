@@ -9,7 +9,7 @@ module Turbolinks
 
       self.status           = 200
       self.response_body    = "Turbolinks.visit('#{location}');"
-      response.content_type = Mime::JS
+      response.content_type = Mime[:js]
     end
   end
 end
