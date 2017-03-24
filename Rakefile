@@ -9,7 +9,10 @@ end
 
 namespace :test do
   task :all do
-    %w(rails32 rails40 rails41 rails42 rails50).each do |gemfile|
+    rails_versions = []
+    rails_versions.push('rails32', 'rails40', 'rails41') if RUBY_VERSION < '2.4'
+    rails_versions.push('rails42', 'rails50')
+    rails_versions.each do |gemfile|
       sh "BUNDLE_GEMFILE='Gemfile.#{gemfile}' bundle --quiet"
       sh "BUNDLE_GEMFILE='Gemfile.#{gemfile}' bundle exec rake test"
     end
